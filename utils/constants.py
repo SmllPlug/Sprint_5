@@ -3,5 +3,4 @@ class Constants:
     TEST_TITLE = "Test"
     TEST_PRODUCT_DESCRIPTION = "Продам"
     TEST_PRICE = 10
-
     ERROR_LABEL = "Ошибка"

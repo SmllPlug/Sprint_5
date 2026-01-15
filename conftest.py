@@ -31,9 +31,9 @@ def login_user(driver):
     driver.find_element(*LoginPage.EMAIL).send_keys(TestUser.EMAIL)
     driver.find_element(*LoginPage.PASSWORD).send_keys(TestUser.PASSWORD)
     driver.find_element(*LoginPage.LOGIN_BUTTON).click()
-    # Ожидаем, пока пользователь войдет в систему 
+    # Ожидаем, пока пользователь войдет в систему
     WebDriverWait(
         driver, Waiter.DEFAULT_WAIT_TIME).until(
         EC.visibility_of_element_located(MainPage.AVATAR_LOGO)
-        )
+    )
     return driver
