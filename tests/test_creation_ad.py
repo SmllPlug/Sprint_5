@@ -1,20 +1,21 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
 from locators import MainPage, CreationPage, DropDown, RadioButton, ProfilePage
 from utils.waiters import Waiter
 from utils.constants import Constants
+
 
 class TestCreationAd:
     def test_creation_ad_unauthorized_user(self, driver: WebDriver):
         # Нажатие на кнопку создания объявления
         driver.find_element(*MainPage.CREATION_BUTTON).click()
-        # Ожидание открытия формы для создания объявления
-        creation_form = WebDriverWait(
+        # Проверка открытия формы создания объявления с ошибкой
+        assert WebDriverWait(
             driver, Waiter.DEFAULT_WAIT_TIME).until(
             EC.visibility_of_element_located(CreationPage.UNAUTHORIZED_CREATION_TITLE)
-            )
-        assert creation_form.is_displayed() and creation_form.text == Constants.AUTH_REQUIRED_LABEL
+            ).text == Constants.AUTH_REQUIRED_LABEL
 
     def test_creation_ad_authorized_user(self, login_user):
         driver = login_user
@@ -65,11 +66,7 @@ class TestCreationAd:
             EC.visibility_of_element_located(ProfilePage.MY_ADS)
             )
         # Ожидание появления созданного объявления в списке
-        card_ad = WebDriverWait( 
+        assert WebDriverWait( 
             driver, Waiter.DEFAULT_WAIT_TIME).until( 
             EC.visibility_of_element_located(ProfilePage.CARD_ADD) 
-            ) 
-        assert card_ad.is_displayed()
-
-
-    
+            )
