@@ -2,29 +2,22 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
 from locators import MainPage, LoginPage
-from utils.generator import UserDataGenerator
 from utils.user import TestUser
 from utils.waiters import Waiter
+from utils.urls import Urls
+
+
 # Фикстура для инициализации веб-драйвера
 @pytest.fixture(scope="function")
 def driver():
     driver = webdriver.Chrome()
-    driver.get("https://qa-desk.stand.praktikum-services.ru/")
+    driver.get(Urls.BASE_URL)
     yield driver
     driver.quit()
-# Фикустура для создания валидной почты
-@pytest.fixture
-def unique_valid_email():
-    return UserDataGenerator.generate_valid_email()
-# Фикустура для создания валидного пароля
-@pytest.fixture
-def unique_valid_password():
-    return UserDataGenerator.generate_valid_password()
-# Фикустура для создания невалидной почты
-@pytest.fixture
-def unique_invalid_email():
-    return UserDataGenerator.generate_invalid_email()
+
+
 # Фикстура для входа на сайт
 @pytest.fixture
 def login_user(driver):
